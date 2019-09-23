@@ -1,2 +1,0 @@
-# RehearsappServer
-Backend for Rehearsapp 
