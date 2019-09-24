@@ -1,9 +1,8 @@
 package ru.abbysoft.rehearsapp.server
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.server.db.DatabaseFactory
 import java.util.*
 
 @RestController
@@ -24,8 +23,13 @@ class MainController {
     }
 
     @GetMapping(PLACE_GET_METHOD_PATH)
-    fun getPlace(@RequestParam("id") id : Long) : String {
+    fun getPlace(@RequestParam("id") id : Long) : Place? {
         // get place from db and return
-        return "place with id [${id}] is Saint-Petersburg Baltiyskaya house 88"
+        return DatabaseFactory.getDefaultDatabaseInstance().getPlace(id)
+    }
+
+    @PostMapping(PLACE_ADD_METHOD_PATH)
+    fun addPlace(@RequestBody place: Place) {
+        DatabaseFactory.getDefaultDatabaseInstance().addPlace(place)
     }
 }

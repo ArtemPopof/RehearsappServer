@@ -1,16 +1,22 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	kotlin("jvm") version "1.2.71"
+	kotlin("jvm")
+	maven
 }
 
-group = "ru.abbysoft.rehearsapp.server"
+group = "ru.abbysoft.rehearsapp"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-	mavenCentral()
 	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 tasks.withType<KotlinCompile> {
@@ -19,9 +25,3 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "1.8"
 	}
 }
-//
-//tasks {
-//	"install" {
-//		// todo call child install tasks
-//	}
-//}
