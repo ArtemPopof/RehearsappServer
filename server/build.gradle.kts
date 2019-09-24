@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
+	id("com.palantir.docker") version "0.22.1"
 	kotlin("jvm")
 	kotlin("plugin.spring")
 	kotlin("plugin.jpa") version "1.2.71"
