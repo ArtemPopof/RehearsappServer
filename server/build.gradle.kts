@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.1.8.RELEASE"
-	id("io.spring.dependency-management") version "1.0.8.RELEASE"
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
 	kotlin("jvm")
-	kotlin("plugin.spring") version "1.2.71"
+	kotlin("plugin.spring")
+	kotlin("plugin.jpa") version "1.2.71"
 }
 
 group = "ru.abbysoft.rehearsapp"
@@ -18,10 +19,12 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("ru.abbysoft.rehearsapp:model:0.0.1-SNAPSHOT")
+	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

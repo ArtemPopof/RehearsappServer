@@ -1,14 +1,18 @@
 package ru.abbysoft.rehearsapp.server
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.Place
-import ru.abbysoft.rehearsapp.server.db.DatabaseFactory
+import ru.abbysoft.rehearsapp.server.data.PlacesRepository
 import java.util.*
 
 @RestController
 class MainController {
 
     private val random = Random(System.currentTimeMillis())
+
+    @Autowired
+    private lateinit var placesRepository : PlacesRepository
 
     @RequestMapping("/")
     fun index() : String {
@@ -24,12 +28,20 @@ class MainController {
 
     @GetMapping(PLACE_GET_METHOD_PATH)
     fun getPlace(@RequestParam("id") id : Long) : Place? {
-        // get place from db and return
-        return DatabaseFactory.getDefaultDatabaseInstance().getPlace(id)
+        return try {
+            placesRepository.findById(id).get()
+        } catch (e : NoSuchElementException) {
+            return null
+        }
+    }
+
+    @GetMapping(PLACE_GET_ALL_METHOD_PATH)
+    fun getAllPlaces() : Iterable<Place> {
+        return placesRepository.findAll()
     }
 
     @PostMapping(PLACE_ADD_METHOD_PATH)
     fun addPlace(@RequestBody place: Place) {
-        DatabaseFactory.getDefaultDatabaseInstance().addPlace(place)
+        placesRepository.save(place)
     }
 }

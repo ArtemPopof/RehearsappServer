@@ -1,3 +1,14 @@
 package ru.abbysoft.rehearsapp.model
 
-data class Place (val name: String, val headerImageId : Long, val position : String)
+import javax.persistence.*
+
+@Entity
+data class Place (
+        @Id
+        @GeneratedValue(strategy=GenerationType.AUTO)
+        val id: Long,
+
+        val name: String,
+        val headerImageId : Long,
+        val position : String
+)
