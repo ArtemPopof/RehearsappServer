@@ -22,12 +22,12 @@ class MainController {
              <br>
              <a href='${APP_PAGE}'>about Rehearsapp</a>
              <br>
-             <a href='${PLACE_GET_METHOD_PATH}/?id=${randId}'>get Place</a>
+             <a href='/place/{$randId}/'>get Place</a>
         """
     }
 
-    @GetMapping(PLACE_GET_METHOD_PATH)
-    fun getPlace(@RequestParam("id") id : Long) : Place? {
+    @GetMapping("/place/{id}/")
+    fun getPlace(@PathVariable("id") id : Long) : Place? {
         return try {
             placesRepository.findById(id).get()
         } catch (e : NoSuchElementException) {
@@ -35,13 +35,14 @@ class MainController {
         }
     }
 
-    @GetMapping(PLACE_GET_ALL_METHOD_PATH)
+    @GetMapping("/place/getAll/")
     fun getAllPlaces() : Iterable<Place> {
         return placesRepository.findAll()
     }
 
-    @PostMapping(PLACE_ADD_METHOD_PATH)
-    fun addPlace(@RequestBody place: Place) {
-        placesRepository.save(place)
+    @PostMapping("/place/add/")
+    fun addPlace(@RequestBody place: Place) : Long {
+        println("place being added: $place")
+        return placesRepository.save(place).id
     }
 }

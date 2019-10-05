@@ -1,14 +1,18 @@
 package ru.abbysoft.rehearsapp.model
 
+import java.util.*
 import javax.persistence.*
 
 @Entity
 data class Place (
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)
-        val id: Long,
+        var id: Long = -1,
 
-        val name: String,
-        val headerImageId : Long,
-        val position : String
+        var name: String = "",
+        var headerImageId : Long = -1,
+        var position : String = "",
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        val rooms: List<Room> = Collections.emptyList()
 )
