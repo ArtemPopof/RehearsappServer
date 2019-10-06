@@ -29,7 +29,9 @@ class MainController {
     @GetMapping("/place/{id}/")
     fun getPlace(@PathVariable("id") id : Long) : Place? {
         return try {
-            placesRepository.findById(id).get()
+            val place = placesRepository.findById(id).get()
+            println("return place: $place")
+            place
         } catch (e : NoSuchElementException) {
             return null
         }

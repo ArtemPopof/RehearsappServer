@@ -1,6 +1,5 @@
 package ru.abbysoft.rehearsapp.model
 
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -13,6 +12,6 @@ data class Place (
         var headerImageId : Long = -1,
         var position : String = "",
 
-        @OneToMany(cascade = [CascadeType.ALL])
-        val rooms: List<Room> = Collections.emptyList()
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        val rooms: List<Room> = ArrayList(7)
 )
