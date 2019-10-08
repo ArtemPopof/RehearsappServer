@@ -16,7 +16,7 @@ class ImageStorageController {
      * @return image identifier
      */
     @PostMapping("/save/")
-    fun saveImage(data: ByteArray) : String {
+    fun saveImage(@RequestBody data: ByteArray) : String {
         val name = generateNewFile()
         saveFile(File(name), data)
 
