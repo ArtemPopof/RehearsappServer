@@ -1,20 +1,18 @@
 package ru.abbysoft.rehearsapp.server
 
-import org.springframework.beans.factory.annotation.Autowired
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.util.logging.Level
-import java.util.logging.Logger
 
 @RestController
 @RequestMapping("/image")
 class ImageStorageController {
 
-    @Autowired
-    lateinit var logger: Logger
+    val logger: Logger = LoggerFactory.getLogger(ImageStorageController::class.java)
 
     /**
      * Load image on server
@@ -28,9 +26,9 @@ class ImageStorageController {
         saveFile(file, data)
 
         if (file.exists()) {
-            logger.log(Level.INFO, "Saved image $name with size ${data.size}")
+            logger.info("Saved image $name with size ${data.size}")
         } else {
-            logger.log(Level.SEVERE, "Image $name is failed to load")
+            logger.error("Image $name is failed to load")
         }
 
         return name
@@ -51,9 +49,9 @@ class ImageStorageController {
     fun getImage(@PathVariable("id") id: String): ByteArray? {
         val data = readFile(id)
         if (data != null) {
-            logger.log(Level.INFO, "get $id image with size ${data.size}")
+            logger.info("get $id image with size ${data.size}")
         } else {
-            logger.log(Level.SEVERE, "Failed to find image with id $id")
+            logger.error("Failed to find image with id $id")
         }
 
         return data
