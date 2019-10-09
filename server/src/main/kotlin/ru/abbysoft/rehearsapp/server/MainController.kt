@@ -47,4 +47,17 @@ class MainController {
         println("place being added: $place")
         return placesRepository.save(place).id
     }
+
+    @PutMapping("/place/update/")
+    fun updatePlace(@RequestBody place: Place): Boolean {
+        val updated = placesRepository.findById(place.id)
+        if (updated.isEmpty) {
+            throw PlaceNotFoundException()
+        }
+
+        placesRepository.save(place)
+        return true
+    }
+
+    class PlaceNotFoundException : Exception()
 }
