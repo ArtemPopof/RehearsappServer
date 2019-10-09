@@ -20,7 +20,7 @@ class ImageStorageController {
      * @return image identifier
      */
     @PostMapping("/save/")
-    fun saveImage(@RequestBody data: ByteArray) : String {
+    fun saveImage(@RequestBody data: ByteArray) : ImageControllerResponse {
         val name = generateNewFile()
         val file = File(name)
         saveFile(file, data)
@@ -31,7 +31,7 @@ class ImageStorageController {
             logger.error("Image $name is failed to load")
         }
 
-        return name
+        return ImageControllerResponse().apply { imageId = name }
     }
 
     private fun generateNewFile(): String {

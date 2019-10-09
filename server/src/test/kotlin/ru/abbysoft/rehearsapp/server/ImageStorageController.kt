@@ -1,4 +1,4 @@
-package ru.abbysoft.rehearsapp.server.rest
+package ru.abbysoft.rehearsapp.server
 
 import org.junit.Test
 import ru.abbysoft.rehearsapp.server.ImageStorageController
