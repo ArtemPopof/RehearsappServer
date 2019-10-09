@@ -1,6 +1,7 @@
 package ru.abbysoft.rehearsapp.server.rest
 
 import junit.framework.Assert.assertEquals
+import org.hamcrest.core.Is
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
@@ -11,7 +12,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import ru.abbysoft.rehearsapp.model.ImageControllerResponse
 import ru.abbysoft.rehearsapp.server.ImageStorageController
 
 @WebMvcTest(ImageStorageController::class)
@@ -29,17 +32,12 @@ class ImageStorageRestTest {
         val data = getData()
         val name = "img19508057124"
 
-        given(controller.saveImage(data)).willReturn(name)
+        given(controller.saveImage(data)).willReturn(ImageControllerResponse().apply { imageId = name })
 
-        val result = mockMvc.perform(post("/image/save/")
+        mockMvc.perform(post("/image/save/")
                 .contentType(MediaType.APPLICATION_JSON).content(data))
                 .andExpect(status().isOk)
-                .andReturn()
-
-        val body = result.response.contentAsString
-        println(body)
-
-        assertEquals(body, name)
+                .andExpect(jsonPath("$.imageId", Is.`is`(name)))
     }
 
     private fun getData(): ByteArray {
