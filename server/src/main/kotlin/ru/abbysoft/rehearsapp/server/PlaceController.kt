@@ -77,7 +77,7 @@ class PlaceController {
     }
 
     @PatchMapping("/place/{id}/")
-    fun patchPlace(@PathVariable("id") id: Long, fields: Map<String, Any>): Boolean {
+    fun patchPlace(@PathVariable("id") id: Long, fields: Map<String, @JvmSuppressWildcards Any>): Boolean {
         val optional = placesRepository.findById(id)
         if (optional.isEmpty) {
             logger.error("Can't get place with id $id")
@@ -98,11 +98,11 @@ class PlaceController {
             val property = Place::class.memberProperties.find { it.name == k } as KMutableProperty<*>
             property.setter.call(place, v)
 
-            logger.debug("field $k changed for ${Place::class.simpleName} with id $id")
+            logger.info("field $k changed for ${Place::class.simpleName} with id $id")
         }
 
         placesRepository.save(place)
-        logger.debug("saved place $place")
+        logger.info("patched place $place")
 
         return true
     }
