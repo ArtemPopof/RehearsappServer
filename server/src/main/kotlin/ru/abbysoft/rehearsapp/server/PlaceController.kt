@@ -77,11 +77,11 @@ class PlaceController {
     }
 
     @PatchMapping("/place/{id}/")
-    fun patchPlace(@PathVariable("id") id: Long, fields: Map<String, Any>) {
+    fun patchPlace(@PathVariable("id") id: Long, fields: Map<String, Any>): Boolean {
         val optional = placesRepository.findById(id)
         if (optional.isEmpty) {
             logger.error("Can't get place with id $id")
-            return
+            return false
         }
 
         val place = optional.get()
@@ -92,7 +92,7 @@ class PlaceController {
             val field = ReflectionUtils.findField(Place::class.java, k)
             if (field == null) {
                 logger.error("Cannot find field $k in class ${Place::class.simpleName}")
-                return
+                return false
             }
 
             val property = Place::class.memberProperties.find { it.name == k } as KMutableProperty<*>
@@ -103,6 +103,8 @@ class PlaceController {
 
         placesRepository.save(place)
         logger.debug("saved place $place")
+
+        return true
     }
 
     class PlaceNotFoundException : Exception()
