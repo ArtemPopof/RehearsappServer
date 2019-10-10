@@ -1,6 +1,5 @@
 package ru.abbysoft.rehearsapp.server.rest
 
-import junit.framework.Assert.assertEquals
 import org.hamcrest.core.Is
 import org.junit.Test
 import org.junit.runner.RunWith

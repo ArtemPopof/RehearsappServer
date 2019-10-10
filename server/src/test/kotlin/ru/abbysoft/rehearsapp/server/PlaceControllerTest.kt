@@ -16,7 +16,7 @@ import java.util.*
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class MainControllerTest {
+class PlaceControllerTest {
 
     private var lastPlace : Place? = null
 
@@ -24,7 +24,7 @@ class MainControllerTest {
     private lateinit var placesRepository : PlacesRepository
 
     @Autowired
-    private lateinit var controller : MainController
+    private lateinit var controller : PlaceController
 
     @Before
     fun mockRepository() {
