@@ -67,12 +67,17 @@ class PlaceController {
 
     @PutMapping("/place/update/")
     fun updatePlace(@RequestBody place: Place): Boolean {
+        logger.debug("UPDATING")
+
         val updated = placesRepository.findById(place.id)
         if (updated.isEmpty) {
-            throw PlaceNotFoundException()
+            logger.error("can't find place with id ${place.id}")
+            return false
         }
 
         placesRepository.save(place)
+        logger.debug("place saved $place")
+
         return true
     }
 
@@ -85,6 +90,11 @@ class PlaceController {
         }
 
         val place = optional.get()
+
+        if (fields.isEmpty()) {
+            logger.debug("empty field map")
+            return false
+        }
 
         for ((k, v) in fields) {
             logger.debug("trying to set $k field to $v on object with id $id")
