@@ -2,10 +2,7 @@ package ru.abbysoft.rehearsapp.server
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.server.data.RoomRepository
 
@@ -19,5 +16,12 @@ class RoomController {
     @GetMapping("{id}")
     fun getRoom(@PathVariable("id") id: Long): Room? {
         return repository.findByIdOrNull(id)
+    }
+
+    @PostMapping
+    fun saveRoom(@RequestBody room: Room): Boolean {
+        repository.save(room)
+
+        return repository.existsById(room.id)
     }
 }
