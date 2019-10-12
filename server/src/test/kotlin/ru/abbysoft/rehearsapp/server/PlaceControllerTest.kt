@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit4.SpringRunner
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.server.data.PlacesRepository
 import java.util.*
 
@@ -69,11 +70,39 @@ class PlaceControllerTest {
         assertEquals(saved?.headerImageId, 5L)
     }
 
+    @Test
+    fun testUpdateMethodShouldUpdateCorrectly() {
+        val place = createPlace()
+        val newRooms = createRooms()
+        val newPlace = place.apply { rooms = newRooms }
+        var saved: Place? = null
+
+        given(placesRepository.findById(place.id)).willReturn(Optional.of(place))
+        given(placesRepository.save(any(Place::class.java))).willAnswer {
+            saved = it.getArgument<Place>(0)
+
+            null
+        }
+
+        controller.updatePlace(newPlace)
+
+        assertEquals(saved, newPlace)
+    }
+
     private fun createPlace(): Place {
         val place = Place()
         place.name = "Название на русском"
         place.id = PLACE_ID
         return place
+    }
+
+    private fun createRooms(): List<Room> {
+        return mutableListOf(
+                Room(0, "firstRoom", 25.5f, 22.3f),
+                Room(0, "secondRoom", 25.5f, 22.3f),
+                Room(0, "thirdRoom", 25.5f, 22.3f),
+                Room(0, "fourthRoom", 25.5f, 22.3f)
+                )
     }
 
 }

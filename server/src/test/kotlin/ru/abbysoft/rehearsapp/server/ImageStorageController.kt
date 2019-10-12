@@ -2,7 +2,6 @@ package ru.abbysoft.rehearsapp.server
 
 import junit.framework.Assert.assertNotNull
 import org.junit.Test
-import ru.abbysoft.rehearsapp.server.ImageStorageController
 import java.util.*
 
 class ImageStorageControllerTest {

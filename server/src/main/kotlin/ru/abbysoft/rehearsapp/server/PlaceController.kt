@@ -67,16 +67,15 @@ class PlaceController {
 
     @PutMapping("/place/update/")
     fun updatePlace(@RequestBody place: Place): Boolean {
-        logger.debug("UPDATING")
+        logger.info("updating place $place")
 
-        val updated = placesRepository.findById(place.id)
-        if (updated.isEmpty) {
+        if (!placesRepository.existsById(place.id)) {
             logger.error("can't find place with id ${place.id}")
             return false
         }
 
         placesRepository.save(place)
-        logger.debug("place saved $place")
+        logger.info("place saved $place")
 
         return true
     }

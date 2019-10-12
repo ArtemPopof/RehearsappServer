@@ -13,5 +13,5 @@ data class Place (
         var position : String = "",
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-        val rooms: List<Room> = ArrayList(7)
+        var rooms: List<Room> = ArrayList(5)
 )
