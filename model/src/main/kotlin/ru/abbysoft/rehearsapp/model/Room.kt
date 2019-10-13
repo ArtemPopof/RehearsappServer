@@ -1,5 +1,6 @@
 package ru.abbysoft.rehearsapp.model
 
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -13,5 +14,6 @@ data class Room(
 
         var name: String = "",
         var area: Float = 0f,
-        var price: Float = 0f
+        var price: Float = 0f,
+        var photos: List<String> = Collections.emptyList()
 )

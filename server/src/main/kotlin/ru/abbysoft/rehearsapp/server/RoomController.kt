@@ -19,9 +19,8 @@ class RoomController {
     }
 
     @PostMapping
-    fun saveRoom(@RequestBody room: Room): Boolean {
-        repository.save(room)
-
-        return repository.existsById(room.id)
+    fun saveRoom(@RequestBody room: Room): Long {
+        val returned = repository.save(room)
+        return returned.id
     }
 }
