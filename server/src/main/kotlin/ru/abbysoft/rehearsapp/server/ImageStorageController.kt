@@ -2,6 +2,7 @@ package ru.abbysoft.rehearsapp.server
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.ImageControllerResponse
 import java.io.File
@@ -48,6 +49,18 @@ class ImageStorageController {
 
     @GetMapping("/{id}/")
     fun getImage(@PathVariable("id") id: String): ByteArray? {
+        val data = readFile(id)
+        if (data != null) {
+            logger.info("get $id image with size ${data.size}")
+        } else {
+            logger.error("Failed to find image with id $id")
+        }
+
+        return data
+    }
+
+    @GetMapping("/{id}.jpeg", produces = [MediaType.IMAGE_JPEG_VALUE])
+    fun getImageAsResponse(@PathVariable("id") id: String): ByteArray? {
         val data = readFile(id)
         if (data != null) {
             logger.info("get $id image with size ${data.size}")
