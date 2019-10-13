@@ -14,5 +14,5 @@ data class Room(
         var price: Float = 0f,
 
         @OneToMany(fetch = FetchType.EAGER)
-        var photos: List<Image> = Collections.emptyList()
+        var images: List<Image> = ArrayList(5)
 )

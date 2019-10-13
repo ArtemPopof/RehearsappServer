@@ -1,6 +1,6 @@
 package ru.abbysoft.rehearsapp.server
 
-import junit.framework.Assert.assertNotNull
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import java.util.*
 

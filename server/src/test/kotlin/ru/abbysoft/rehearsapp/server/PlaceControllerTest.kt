@@ -1,7 +1,6 @@
 package ru.abbysoft.rehearsapp.server
 
-import junit.framework.Assert.assertEquals
-import org.junit.Before
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
@@ -58,7 +57,7 @@ class PlaceControllerTest {
         val fields = mapOf<String, Any>("headerImageId" to 5L)
         var saved: Place? = null
 
-        given(placesRepository.findById(place.id)).willReturn(Optional.of(place))
+        given(placesRepository.findById(PLACE_ID)).willReturn(Optional.of(place))
         given(placesRepository.save(any(Place::class.java))).willAnswer {
             saved = it.getArgument<Place>(0)
 
@@ -77,7 +76,7 @@ class PlaceControllerTest {
         val newPlace = place.apply { rooms = newRooms }
         var saved: Place? = null
 
-        given(placesRepository.findById(place.id)).willReturn(Optional.of(place))
+        given(placesRepository.existsById(place.id)).willReturn(true)
         given(placesRepository.save(any(Place::class.java))).willAnswer {
             saved = it.getArgument<Place>(0)
 
