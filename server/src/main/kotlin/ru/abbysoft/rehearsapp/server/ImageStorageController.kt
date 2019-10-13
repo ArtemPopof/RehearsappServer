@@ -51,7 +51,7 @@ class ImageStorageController {
     fun getImage(@PathVariable("id") id: String): ByteArray? {
         val data = readFile(id)
         if (data != null) {
-            logger.info("get $id image with size ${data.size}")
+            logger.info("saving $id image with size ${data.size}")
         } else {
             logger.error("Failed to find image with id $id")
         }
@@ -63,7 +63,7 @@ class ImageStorageController {
     fun getImageAsResponse(@PathVariable("id") id: String): ByteArray? {
         val data = readFile(id)
         if (data != null) {
-            logger.info("get $id image with size ${data.size}")
+            logger.info("saving /images/$id.jpeg image with size ${data.size}")
         } else {
             logger.error("Failed to find image with id $id")
         }
