@@ -9,7 +9,7 @@ data class Place (
         var id: Long = -1,
 
         var name: String = "",
-        var headerImageId : Long = -1,
+        var headerImageId : String = "",
         var position : String = "",
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
