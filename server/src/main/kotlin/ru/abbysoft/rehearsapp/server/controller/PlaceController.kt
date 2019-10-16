@@ -1,15 +1,14 @@
-package ru.abbysoft.rehearsapp.server
+package ru.abbysoft.rehearsapp.server.controller
 
 import org.slf4j.LoggerFactory
-import org.springframework.beans.PropertyAccessorUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.util.ReflectionUtils
 import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.server.APP_PAGE
 import ru.abbysoft.rehearsapp.server.data.PlacesRepository
 import java.util.*
 import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.declaredMembers
 import kotlin.reflect.full.memberProperties
 
 @RestController
@@ -26,7 +25,7 @@ class PlaceController {
         return """
             This is Rehearsapp REST api index page!
              <br>
-             <a href='${APP_PAGE}'>about Rehearsapp</a>
+             <a href='$APP_PAGE'>about Rehearsapp</a>
              <br>
              <a href='/place/{${place?.id}}/'>get Place</a>
              <a href='/place/getAll/'>get all places</a> 

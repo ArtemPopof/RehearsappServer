@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit4.SpringRunner
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.server.controller.PlaceController
 import ru.abbysoft.rehearsapp.server.data.PlacesRepository
 import java.util.*
 

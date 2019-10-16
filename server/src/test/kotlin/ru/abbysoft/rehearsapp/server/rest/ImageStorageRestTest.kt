@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import ru.abbysoft.rehearsapp.model.ImageControllerResponse
-import ru.abbysoft.rehearsapp.server.ImageStorageController
+import ru.abbysoft.rehearsapp.server.controller.ImageStorageController
 
 @WebMvcTest(ImageStorageController::class)
 @RunWith(SpringRunner::class)

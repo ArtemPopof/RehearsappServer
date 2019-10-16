@@ -1,4 +1,4 @@
-package ru.abbysoft.rehearsapp.server
+package ru.abbysoft.rehearsapp.server.controller
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
