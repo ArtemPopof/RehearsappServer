@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.server.data.ImageRepository
 import ru.abbysoft.rehearsapp.server.data.RoomRepository
+import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("room")
@@ -29,7 +30,8 @@ class RoomController {
         logger.debug("save room $room")
 
         // save all images first
-        room.images.stream().forEach { imageRepository.save(it) }
+        val savedImages = room.images.stream().map { imageRepository.save(it) }.collect(Collectors.toList())
+        room.images = savedImages
 
         val returned = repository.save(room)
 
