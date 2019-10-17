@@ -14,5 +14,8 @@ data class Room(
         var price: Float = 0f,
 
         @OneToMany(fetch = FetchType.EAGER)
-        var images: List<Image> = ArrayList(5)
+        var images: List<Image> = ArrayList(5),
+
+        @OneToMany(fetch = FetchType.EAGER)
+        var slots: List<TimeSlot> = ArrayList()
 )
