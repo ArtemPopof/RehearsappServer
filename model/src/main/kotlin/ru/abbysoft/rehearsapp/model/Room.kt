@@ -17,5 +17,5 @@ data class Room(
         var images: List<Image> = ArrayList(5),
 
         @OneToMany
-        var slots: List<TimeSlot> = ArrayList()
+        var slots: List<TimeSlot> = generateDefaultSlots()
 )
