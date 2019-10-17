@@ -16,35 +16,22 @@ class BookService {
     private lateinit var repository: TimeSlotRepository
 
     @PostMapping("{id}")
-    fun bookSlot(@PathVariable("id") slotId: Long): Boolean {
-        logger.debug("Booking room slot with id $slotId")
+    fun bookSlot(@PathVariable("id") slotId: Long, @RequestBody userId: Long): Boolean {
+        if (userId == -1L) {
+            logger.debug("Unbooking room slot with id $slotId")
+        } else {
+            logger.debug("Set booking for room slot with id $slotId for user with id $userId")
+        }
         val slot = repository.findByIdOrNull(slotId)
         if (slot == null) {
             logger.debug("Cannot find slot with id $slotId")
             return false
         }
 
-        slot.booked = true
+        slot.bookedBy = userId
         repository.save(slot)
 
-        logger.debug("Booked room slot with id $slotId")
-
-        return true
-    }
-
-    @PostMapping("{id}")
-    fun unbookSlot(@PathVariable("id") slotId: Long): Boolean {
-        logger.debug("Unbook room slot with id $slotId")
-        val slot = repository.findByIdOrNull(slotId)
-        if (slot == null) {
-            logger.debug("Cannot find slot with id $slotId")
-            return false
-        }
-
-        slot.booked = false
-        repository.save(slot)
-
-        logger.debug("Room slot with id $slotId has been booked")
+        logger.debug("Room slot with id $slotId has been changed")
 
         return true
     }

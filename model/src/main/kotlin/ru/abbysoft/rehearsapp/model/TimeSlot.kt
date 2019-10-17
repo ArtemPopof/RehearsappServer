@@ -17,5 +17,7 @@ data class TimeSlot (
 
     // common price without any sales
     var price: Int = 0,
-    var booked: Boolean = false
+
+    // user id that booked this slot
+    var bookedBy: Long = -1L
 )
