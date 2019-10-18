@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.server.data.ImageRepository
 import ru.abbysoft.rehearsapp.server.data.RoomRepository
+import ru.abbysoft.rehearsapp.server.data.TimeSlotRepository
 import java.util.stream.Collectors
 
 @RestController
@@ -19,6 +20,8 @@ class RoomController {
     private lateinit var repository: RoomRepository
     @Autowired
     private lateinit var imageRepository: ImageRepository
+    @Autowired
+    private lateinit var slotsRepository: TimeSlotRepository
 
     @GetMapping("{id}")
     fun getRoom(@PathVariable("id") id: Long): Room? {
@@ -32,6 +35,9 @@ class RoomController {
         // save all images first
         val savedImages = room.images.stream().map { imageRepository.save(it) }.collect(Collectors.toList())
         room.images = savedImages
+        // then save all timeSlots
+        val savedSlots = room.slots.stream().map { slotsRepository.save(it) }.collect(Collectors.toList())
+        room.slots = savedSlots
 
         val returned = repository.save(room)
 
@@ -47,7 +53,7 @@ class RoomController {
             return false
         }
 
-        repository.save(room)
+        saveRoom(room)
 
         logger.debug("room updated successfully $room")
         return true
