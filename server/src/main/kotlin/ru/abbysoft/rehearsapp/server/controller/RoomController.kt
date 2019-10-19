@@ -22,6 +22,8 @@ class RoomController {
     private lateinit var imageRepository: ImageRepository
     @Autowired
     private lateinit var slotsRepository: TimeSlotRepository
+    @Autowired
+    private lateinit var priceService: PriceService
 
     @GetMapping("{id}")
     fun getRoom(@PathVariable("id") id: Long): Room? {
@@ -36,7 +38,10 @@ class RoomController {
         val savedImages = room.images.stream().map { imageRepository.save(it) }.collect(Collectors.toList())
         room.images = savedImages
         // then save all timeSlots
-        val savedSlots = room.slots.stream().map { slotsRepository.save(it) }.collect(Collectors.toList())
+        val savedSlots = room.slots.stream().map {
+            slotsRepository.save(it).apply { priceService.calcSlotPrice(room.price, it.timeStart) }
+        }.collect(Collectors.toList())
+
         room.slots = savedSlots
 
         val returned = repository.save(room)
