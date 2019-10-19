@@ -39,7 +39,7 @@ class RoomController {
         room.images = savedImages
         // then save all timeSlots
         val savedSlots = room.slots.stream().map {
-            slotsRepository.save(it).apply { priceService.calcSlotPrice(room.price, it.timeStart) }
+            slotsRepository.save(it).apply { price = priceService.calcSlotPrice(room.price, it.timeStart) }
         }.collect(Collectors.toList())
 
         room.slots = savedSlots
