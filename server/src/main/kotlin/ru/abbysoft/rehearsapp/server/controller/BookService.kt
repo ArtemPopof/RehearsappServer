@@ -24,7 +24,7 @@ class BookService {
         }
         val slot = repository.findByIdOrNull(slotId)
         if (slot == null) {
-            logger.debug("Cannot find slot with id $slotId")
+            logger.error("Cannot find slot with id $slotId")
             return false
         }
 
