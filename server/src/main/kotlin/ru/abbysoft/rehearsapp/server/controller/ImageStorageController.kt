@@ -4,6 +4,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import ru.abbysoft.rehearsapp.model.ImageControllerResponse
 import java.io.File
 import java.io.FileInputStream
@@ -34,6 +36,28 @@ class ImageStorageController {
         }
 
         return ImageControllerResponse().apply { imageId = name }
+    }
+
+    @PostMapping("/save")
+    fun saveImage(@RequestParam("file") file: MultipartFile,
+                  redirectAttributes: RedirectAttributes): ImageControllerResponse {
+        logger.info("Saved image with size: ${file.size}")
+
+        if (file.isEmpty) {
+            redirectAttributes.addFlashAttribute("message", "Please select file to upload")
+            logger.error("File is empty, could not upload")
+            return ImageControllerResponse()
+        }
+
+        val bytes = file.bytes
+        val response = saveImage(bytes)
+
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded image ''");
+
+        logger.info("Successfully saved image")
+
+        return response
     }
 
     private fun generateNewFile(): String {

@@ -19,7 +19,32 @@ class ImageStorageControllerTest {
         assert(Arrays.compare(input, returned) == 0)
     }
 
+    @Test
+    fun testImageSavingIsNotVeryLong() {
+        val maxSaveTime = 2 * 1000
+
+        val data = getBigData()
+        val controller = ImageStorageController()
+
+        val start = System.currentTimeMillis()
+        val imageID = controller.saveImage(data)
+        val diff = System.currentTimeMillis() - start
+
+        assert(diff < maxSaveTime)
+        assertNotNull(imageID)
+    }
+
     private fun getData(): ByteArray {
         return byteArrayOf(5, 2, 1, 4, 5)
+    }
+
+    private fun getBigData(): ByteArray {
+        val array = ByteArray(1 * 1024 * 1024)
+
+        for (i in 0 until 1 * 1024 * 1024) {
+            array[i] = (i % 127).toByte()
+        }
+
+        return array
     }
 }
