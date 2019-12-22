@@ -12,6 +12,9 @@ data class Place (
         var headerImageId : String = "",
         var position : String = "",
 
+        var telephone : String = "",
+        var website : String = "",
+
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         var rooms: List<Room> = ArrayList(5)
 )
