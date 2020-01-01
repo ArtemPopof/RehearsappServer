@@ -15,6 +15,8 @@ data class Place (
         var telephone : String = "",
         var website : String = "",
 
+        var averagePrice : Int = "",
+
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
         var rooms: List<Room> = ArrayList(5)
 )
